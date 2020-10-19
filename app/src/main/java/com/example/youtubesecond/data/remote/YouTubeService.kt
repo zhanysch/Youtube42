@@ -7,7 +7,9 @@ import retrofit2.http.Query
 interface YouTubeService {
 
     @GET("videos")
-    fun getPopularVideos(@Query("key") key:String,
+    suspend fun getPopularVideos(
+        //@Query("key") key:String, ключ убираем так как с помошью interceptora, подставили ключ, в класс APiKeyInterceptor
+        //там находится и ключ
     @Query("chart") chart:String
     ) : MainResponseYoutube
 }

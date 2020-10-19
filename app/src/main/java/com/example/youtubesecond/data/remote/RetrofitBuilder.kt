@@ -25,11 +25,15 @@ object RetrofitBuilder {
     }
 
     private fun getClient(): OkHttpClient {
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY // тупо для отображен в logcat
+        }
        return OkHttpClient.Builder()
             .connectTimeout(5 , TimeUnit.SECONDS)  // на подключение 5 секунд
             .readTimeout(10 , TimeUnit.SECONDS)   //на скачивание данных
             .writeTimeout(10 , TimeUnit.SECONDS)  // на отправку данных
-          // .addInterceptor(HttpLoggingInterceptor())
+           .addInterceptor(loggingInterceptor) // тупо  для logcat
+           .addInterceptor(ApiKeyInterceptor())  // интерцептор сам нужен модифицировать запросы
             .build()
     }
 }
